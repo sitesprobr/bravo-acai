@@ -30,19 +30,47 @@
       font-weight: 500;
       line-height: 1.5;
       padding-bottom: 96px;
+      position: relative;
+      overflow-x: hidden;
     }
 
-    main { max-width: 640px; margin: 0 auto; padding: 0 16px }
+    /* Partículas douradas no fundo */
+    .particulas { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden }
+    .particulas span {
+      position: absolute; bottom: -20px; width: 6px; height: 6px; border-radius: 50%;
+      background: radial-gradient(circle, #ffe9a8, var(--accent));
+      opacity: 0; animation: subir linear infinite
+    }
+    @keyframes subir {
+      0% { transform: translateY(0) scale(.6); opacity: 0 }
+      10% { opacity: .9 }
+      90% { opacity: .7 }
+      100% { transform: translateY(-110vh) scale(1.1); opacity: 0 }
+    }
+
+    main { max-width: 640px; margin: 0 auto; padding: 0 16px; position: relative; z-index: 1 }
 
     header {
       text-align: center; padding: 30px 0 16px;
       border-bottom: 1px solid var(--line)
     }
     .logo { width: 150px; max-width: 60%; height: auto; margin: 0 auto 8px; display: block }
-    .crown { font-size: 30px }
+    .crown { font-size: 34px; animation: brilhoCoroa 2.4s ease-in-out infinite }
+    @keyframes brilhoCoroa {
+      0%, 100% { transform: translateY(0); filter: drop-shadow(0 0 2px rgba(212,175,55,.5)) }
+      50% { transform: translateY(-5px); filter: drop-shadow(0 0 14px rgba(212,175,55,.95)) }
+    }
     h1 {
       font-family: 'Cinzel', serif; font-weight: 700; font-size: 38px; margin: 4px 0 0;
-      color: var(--accent); letter-spacing: 3px
+      letter-spacing: 3px;
+      background: linear-gradient(100deg, #8a6d1f 0%, #d4af37 35%, #fff3c9 50%, #d4af37 65%, #8a6d1f 100%);
+      background-size: 250% 100%;
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      animation: shimmer 4s linear infinite
+    }
+    @keyframes shimmer {
+      0% { background-position: 200% 0 }
+      100% { background-position: -200% 0 }
     }
     .tag { color: var(--muted); margin: 6px 0 0; font-weight: 600; letter-spacing: 2px; font-size: 13px; text-transform: uppercase }
 
@@ -52,17 +80,23 @@
     }
     .sub-sec { color: var(--muted); font-size: 13px; text-align: center; margin: 0 0 14px }
 
-    .item { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; margin-bottom: 12px }
+    .item { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; margin-bottom: 12px; transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease }
+    .item:hover, .item:focus-within { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(212,175,55,.12); border-color: var(--accent2) }
     .item .nome { font-family: 'Cinzel', serif; font-weight: 700; font-size: 18px; color: var(--accent) }
     .item .desc { color: var(--muted); font-size: 13px; margin: 3px 0 0 }
 
+    /* Entrada ao rolar */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease }
+    .reveal.show { opacity: 1; transform: none }
+
     .tamanhos { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px }
-    .tam { display: flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 999px; padding: 5px 6px 5px 14px; background: #120f0a }
+    .tam { display: flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 999px; padding: 5px 6px 5px 14px; background: #120f0a; transition: transform .15s ease }
+    .tam:active { transform: scale(.96) }
     .tam .tn { font-weight: 700; font-size: 14px }
     .tam .tp { color: var(--accent); font-weight: 700; font-size: 14px }
     .tam button { width: 30px; height: 30px; border-radius: 50%; border: 0; background: var(--accent); color: var(--onaccent); font: 700 18px/1 inherit; cursor: pointer }
     .tam .cnt { min-width: 16px; text-align: center; font-weight: 700; display: none }
-    .tam.ativo { border-color: var(--accent); background: #2a2109 }
+    .tam.ativo { border-color: var(--accent); background: #2a2109; box-shadow: 0 0 10px rgba(212,175,55,.3) }
     .tam .minus { background: var(--line); color: var(--ink); display: none }
 
     .add-li { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 11px 4px; border-bottom: 1px solid var(--line) }
@@ -75,7 +109,8 @@
 
     .gratis-box { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px; margin-bottom: 12px }
     .gratis-box .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px }
-    .chip { background: #120f0a; border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; font-size: 13px; color: var(--ink) }
+    .chip { background: #120f0a; border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; font-size: 13px; color: var(--ink); transition: transform .15s ease, border-color .15s ease }
+    .chip:hover { transform: translateY(-2px); border-color: var(--accent) }
 
     .info { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px; margin-top: 20px }
     .info h3 { font-family: 'Cinzel', serif; font-weight: 700; font-size: 18px; margin: 0 0 10px; color: var(--accent); text-align: center }
@@ -86,8 +121,13 @@
     .info a { color: var(--accent); font-weight: 700 }
 
     .bar { position: fixed; left: 0; right: 0; bottom: 0; padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px)); background: var(--bg); border-top: 1px solid var(--line); display: flex; justify-content: center; z-index: 10 }
-    .bar button { width: 100%; max-width: 620px; border: 0; border-radius: 999px; background: var(--accent); color: var(--onaccent); font: 700 17px inherit; padding: 15px; cursor: pointer }
-    .bar button:disabled { opacity: .5; cursor: default }
+    .bar button { width: 100%; max-width: 620px; border: 0; border-radius: 999px; background: var(--accent); color: var(--onaccent); font: 700 17px inherit; padding: 15px; cursor: pointer; transition: transform .15s ease }
+    .bar button:not(:disabled) { animation: pulsar 2s ease-in-out infinite }
+    .bar button:disabled { opacity: .5; cursor: default; animation: none }
+    @keyframes pulsar {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(212,175,55,.5) }
+      70% { box-shadow: 0 0 0 12px rgba(212,175,55,0) }
+    }
 
     .overlay { position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 20; opacity: 0; pointer-events: none; transition: opacity .25s }
     .overlay.aberto { opacity: 1; pointer-events: auto }
@@ -106,10 +146,16 @@
     .drawer-dados input, .drawer-dados select { width: 100%; border: 1px solid var(--line); border-radius: 12px; background: var(--card); color: var(--ink); font: 500 15px inherit; padding: 11px }
     .drawer-rodape { padding: 14px 20px calc(16px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--line) }
     .drawer-rodape .btn { width: 100%; border: 0; border-radius: 999px; background: #25d366; color: #fff; font: 700 17px inherit; padding: 14px; cursor: pointer }
+
+    @media (prefers-reduced-motion: reduce) {
+      .particulas, .crown, h1, .bar button { animation: none !important }
+      .reveal { opacity: 1; transform: none }
+    }
   </style>
 </head>
 
 <body>
+  <div class="particulas" id="particulas" aria-hidden="true"></div>
   <main>
     <header>
       <!-- Se tiver logo, suba o arquivo e descomente:
@@ -192,6 +238,21 @@
     var WHATS = "5561998934760";
     var qty = {};
 
+    // Partículas douradas
+    (function () {
+      var box = document.getElementById("particulas");
+      if (!box) return;
+      for (var i = 0; i < 18; i++) {
+        var s = document.createElement("span");
+        var size = 3 + Math.random() * 6;
+        s.style.left = Math.random() * 100 + "vw";
+        s.style.width = s.style.height = size + "px";
+        s.style.animationDuration = (7 + Math.random() * 9) + "s";
+        s.style.animationDelay = (Math.random() * 8) + "s";
+        box.appendChild(s);
+      }
+    })();
+
     function key(nome, tam) { return tam ? nome + " (" + tam + ")" : nome; }
 
     function renderCombos(id, list) {
@@ -199,7 +260,7 @@
       if (!box || !list) return;
       list.forEach(function (a) {
         var nome = a[0], desc = a[1], tams = a[2] || [];
-        var card = document.createElement("div"); card.className = "item";
+        var card = document.createElement("div"); card.className = "item reveal";
         var h = document.createElement("div"); h.className = "nome"; h.textContent = nome;
         card.appendChild(h);
         if (desc) { var d = document.createElement("div"); d.className = "desc"; d.textContent = desc; card.appendChild(d); }
@@ -265,6 +326,16 @@
     renderCombos("vitaminas", data.vitaminas);
     renderGratis("gratis", data.gratis);
     renderAdicionais("adicionais", data.adicionais);
+
+    // Revela os cards conforme rola
+    (function () {
+      var els = document.querySelectorAll(".reveal");
+      if (!("IntersectionObserver" in window)) { els.forEach(function (e) { e.classList.add("show"); }); return; }
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add("show"); obs.unobserve(en.target); } });
+      }, { threshold: .12 });
+      els.forEach(function (e) { obs.observe(e); });
+    })();
 
     function totalItens() { var t = 0; for (var k in qty) t += qty[k]; return t; }
     function labelCarrinho(k) { return k.replace(" (adicional)", " (adicional)"); }
